@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ArchitectureTools.Models
+namespace ArchitectureTools.Singletons
 {
     /// <summary>
     /// Configuração do sistema. Implementa o design pattern "Options"
@@ -33,21 +33,21 @@ namespace ArchitectureTools.Models
         /// </summary>
         /// <param name="key">Chave da variável</param>
         /// <param name="value">Valor da variável</param>
-        public void SetValue(string key, string value) => 
+        public void SetValue(string key, string value) =>
             _variables.Add(new KeyValuePair<string, string>(key, value));
 
         /// <summary>
         /// Adiciona lista de variáveis
         /// </summary>
         /// <param name="options">Lista de novas variáveis</param>
-        public void SetValue(List<KeyValuePair<string, string>> options) => 
+        public void SetValue(List<KeyValuePair<string, string>> options) =>
             _variables.AddRange(options);
 
         /// <summary>
         /// Adiciona variável de ambiente na lista
         /// </summary>
         /// <param name="key">Chave da variável de ambienbte</param>
-        public void SetValueFromEnvironment(string key) => 
+        public void SetValueFromEnvironment(string key) =>
             _variables.Add(new KeyValuePair<string, string>(key, Environment.GetEnvironmentVariable(key)));
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace ArchitectureTools.Models
         /// <param name="keys">Lista de chaves de variáveis de ambiente</param>
         public void SetValueFromEnvironment(List<string> keys)
         {
-            foreach(var key in keys)
+            foreach (var key in keys)
                 SetValueFromEnvironment(key);
         }
 
