@@ -7,13 +7,12 @@
     <Title>Ferramentas para construção de arquiteturas</Title>
     <Description>Pacote para auxiliar na criação de novas aplicações, contendo algumas classes implementando alguns padrões de projeto (como pattern "Result", "Options", etc), além de algumas ferramentas auxiliadoras, como por exemplo a criação de uma coleção de endereços de API para realizar chamadas HTTP.</Description>
     <PackageProjectUrl>https://github.com/GustavoAraujo26/architecture-tools</PackageProjectUrl>
-    <PackageReleaseNotes>Criação inicial do projeto</PackageReleaseNotes>
+    <PackageReleaseNotes>Adiconando os comentários nas classes/métodos e estruturação do README.md</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageLicenseFile>README.md</PackageLicenseFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Gustavo de Araujo Oliveira</Authors>
   </PropertyGroup>
 
