@@ -12,6 +12,9 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>README.md</PackageLicenseFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Version>1.0.0</Version>
+    <Authors>Gustavo de Araujo Oliveira</Authors>
   </PropertyGroup>
 
   <ItemGroup>
