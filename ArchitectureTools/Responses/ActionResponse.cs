@@ -2,53 +2,62 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
-namespace ArchitectureTools.Structs
+namespace ArchitectureTools.Responses
 {
     /// <summary>
-    /// Container de retorno para aplicações, para implementãção do design pattern "Result"
+    /// Container de resposta de ação
     /// </summary>
-    /// <typeparam name="T">Tipo da classe de retorno</typeparam>
-    public struct AppResponse<T> where T : class
+    /// <typeparam name="TValue">Tipo da classe de retorno ou struct</typeparam>
+    public struct ActionResponse<TValue>
     {
         /// <summary>
         /// Construtor para inicializar as propriedades
         /// </summary>
-        /// <param name="status">Status do processamento (HTTP)</param>
-        /// <param name="message">Mensagem de retorno</param>
-        /// <param name="stackTrace">Caminho da execução do processamento</param>
-        /// <param name="content">Conteudo a ser retornado</param>
+        /// <param name="status">Status</param>
+        /// <param name="message">Mensagem</param>
+        /// <param name="stackTrace">Rastreamento de pilha</param>
+        /// <param name="traceId">ID de rastreamento</param>
+        /// <param name="content">Conteúdo do container para retorno</param>
         [JsonConstructor]
-        public AppResponse(HttpStatusCode status, string? message = null,
-            string? stackTrace = null, T? content = null)
+        public ActionResponse(HttpStatusCode status, string message,
+            string? stackTrace = null, string? traceId = null, TValue content = default)
         {
             Status = status;
             Message = message;
             StackTrace = stackTrace;
+            TraceId = traceId;
             Content = content;
         }
 
         /// <summary>
-        /// Status do processamento (HTTP)
+        /// Status
         /// </summary>
         public HttpStatusCode Status { get; private set; }
 
         /// <summary>
-        /// Mensagem de retorno
+        /// Mensagem
         /// </summary>
-        public string? Message { get; private set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Caminho da execução do processamento
+        /// Rastreamento de pilha
         /// </summary>
         public string? StackTrace { get; private set; }
 
         /// <summary>
-        /// Conteudo a ser retornado
+        /// Id de rastreamento
         /// </summary>
-        public T? Content { get; private set; }
+        public string? TraceId { get; private set; }
+
+        /// <summary>
+        /// Conteúdo do container para retorno
+        /// </summary>
+        public TValue Content { get; private set; }
 
         /// <summary>
         /// Verifica se o status do processamento é de sucesso
@@ -69,6 +78,28 @@ namespace ArchitectureTools.Structs
             get
             {
                 return !IsSuccess;
+            }
+        }
+
+        /// <summary>
+        /// Verifica se o processamento obteve uma falha parcial
+        /// </summary>
+        public bool PartialFailure
+        {
+            get
+            {
+                return (int)Status >= 400 && (int)Status <= 499;
+            }
+        }
+
+        /// <summary>
+        /// Verifica se o processamento obteve uma falha permanente
+        /// </summary>
+        public bool PermanentFailure
+        {
+            get
+            {
+                return (int)Status >= 500 && (int)Status <= 599;
             }
         }
 
@@ -98,36 +129,32 @@ namespace ArchitectureTools.Structs
         /// Retorna JSON do container de resposta
         /// </summary>
         /// <returns>Json de resposta</returns>
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this);
-        }
+        public override string ToString() => JsonSerializer.Serialize(this);
 
         /// <summary>
         /// Deserializa JSON no container especificado
         /// </summary>
-        /// <typeparam name="T">Tipo do conteudo</typeparam>
         /// <param name="json">JSON a ser deserializado</param>
         /// <returns>Container deserializado</returns>
-        public static AppResponse<T> Deserialize(string json) =>
-            JsonSerializer.Deserialize<AppResponse<T>>(json);
+        public static ActionResponse<TValue> Deserialize(string json) =>
+            JsonSerializer.Deserialize<ActionResponse<TValue>>(json);
 
         /// <summary>
         /// Constrói container de retorno de sucesso, com possibilidade de repassar mensagem
         /// </summary>
         /// <param name="message">Mensagem de sucesso a ser repassada</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> Ok(string? message = null) =>
-            new AppResponse<T>(HttpStatusCode.OK,
-                string.IsNullOrEmpty(message) ? HttpStatusCode.OK.ToString() : message, null, null);
+        public static ActionResponse<TValue> Ok(string? message = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.OK,
+                string.IsNullOrEmpty(message) ? HttpStatusCode.OK.ToString() : message);
 
         /// <summary>
         /// Constrói container de retorno de sucesso, com objeto de retorno
         /// </summary>
         /// <param name="content">Objeto a ser retornado</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> Ok(T content) =>
-            new AppResponse<T>(HttpStatusCode.OK, HttpStatusCode.OK.ToString(), null, content);
+        public static ActionResponse<TValue> Ok(TValue content) =>
+            new ActionResponse<TValue>(HttpStatusCode.OK, HttpStatusCode.OK.ToString(), null, null, content);
 
         /// <summary>
         /// Constrói container de retorno de "requisição ruim", 
@@ -136,8 +163,8 @@ namespace ArchitectureTools.Structs
         /// <param name="message">Mensagem a ser retornada</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> BadRequest(string? message = null, string? stackTrace = null) =>
-            new AppResponse<T>(HttpStatusCode.BadRequest,
+        public static ActionResponse<TValue> BadRequest(string? message = null, string? stackTrace = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.BadRequest,
                 string.IsNullOrEmpty(message) ? HttpStatusCode.BadRequest.ToString() : message, stackTrace);
 
         /// <summary>
@@ -147,8 +174,8 @@ namespace ArchitectureTools.Structs
         /// <param name="message">Mensagem de retorno</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> NotFound(string? message = null, string? stackTrace = null) =>
-            new AppResponse<T>(HttpStatusCode.NotFound,
+        public static ActionResponse<TValue> NotFound(string? message = null, string? stackTrace = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.NotFound,
                 string.IsNullOrEmpty(message) ? HttpStatusCode.NotFound.ToString() : message, stackTrace);
 
         /// <summary>
@@ -158,8 +185,8 @@ namespace ArchitectureTools.Structs
         /// <param name="message">Mensagem de retorno</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> InternalError(string? message = null, string? stackTrace = null) =>
-            new AppResponse<T>(HttpStatusCode.InternalServerError,
+        public static ActionResponse<TValue> InternalError(string? message = null, string? stackTrace = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.InternalServerError,
                 string.IsNullOrEmpty(message) ? HttpStatusCode.InternalServerError.ToString() : message, stackTrace);
 
         /// <summary>
@@ -168,8 +195,8 @@ namespace ArchitectureTools.Structs
         /// </summary>
         /// <param name="exception">Exceção do sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> InternalError(Exception exception) =>
-            new AppResponse<T>(HttpStatusCode.InternalServerError, exception.Message, exception.StackTrace);
+        public static ActionResponse<TValue> InternalError(Exception exception) =>
+            new ActionResponse<TValue>(HttpStatusCode.InternalServerError, exception.Message, exception.StackTrace);
 
         /// <summary>
         /// Constrói container de retorno de validação, com possibilidade de mensagem de retorno e caminho do sistema
@@ -177,8 +204,8 @@ namespace ArchitectureTools.Structs
         /// <param name="message">Mensagem de retorno</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> UnprocessableEntity(string? message = null, string? stackTrace = null) =>
-            new AppResponse<T>(HttpStatusCode.UnprocessableEntity,
+        public static ActionResponse<TValue> UnprocessableEntity(string? message = null, string? stackTrace = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.UnprocessableEntity,
                 string.IsNullOrEmpty(message) ? HttpStatusCode.UnprocessableEntity.ToString() : message, stackTrace);
 
         /// <summary>
@@ -186,7 +213,7 @@ namespace ArchitectureTools.Structs
         /// </summary>
         /// <param name="validationMessages">Lista de mensagens de erro</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> UnprocessableEntity(List<string> validationMessages)
+        public static ActionResponse<TValue> UnprocessableEntity(List<string> validationMessages)
         {
             List<string> errorsFormatted = new List<string>();
 
@@ -195,7 +222,7 @@ namespace ArchitectureTools.Structs
 
             string errorMessage = $"Invalid data! {string.Join(", ", errorsFormatted)}";
 
-            return new AppResponse<T>(HttpStatusCode.UnprocessableEntity, errorMessage);
+            return new ActionResponse<TValue>(HttpStatusCode.UnprocessableEntity, errorMessage);
         }
 
         /// <summary>
@@ -205,8 +232,8 @@ namespace ArchitectureTools.Structs
         /// <param name="message">Mensagem de retorno</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
         /// <returns>Container de resposta</returns>
-        public static AppResponse<T> Unauthorized(string? message = null, string? stackTrace = null) =>
-            new AppResponse<T>(HttpStatusCode.Unauthorized,
+        public static ActionResponse<TValue> Unauthorized(string? message = null, string? stackTrace = null) =>
+            new ActionResponse<TValue>(HttpStatusCode.Unauthorized,
                 string.IsNullOrEmpty(message) ? HttpStatusCode.Unauthorized.ToString() : message, stackTrace);
 
         /// <summary>
@@ -215,13 +242,37 @@ namespace ArchitectureTools.Structs
         /// <param name="status">Status HTTP do processamento</param>
         /// <param name="message">Mensagem de retorno</param>
         /// <param name="stackTrace">Caminho percorrido no sistema</param>
-        /// <param name="content">Conteúdo a ser retornado</param>
-        /// <returns></returns>
-        public static AppResponse<T> Custom(HttpStatusCode status, string? message = null,
-            string? stackTrace = null, T? content = null) =>
-            new AppResponse<T>(status,
+        /// <param name="traceId">ID de rastreamento</param>
+        /// <param name="content">Conteúdo do container para retorno</param>
+        /// <returns>Container de resposta</returns>
+        public static ActionResponse<TValue> Custom(HttpStatusCode status, string? message = null,
+            string? stackTrace = null, string? traceId = null, TValue content = default) =>
+            new ActionResponse<TValue>(status,
                 string.IsNullOrEmpty(message) ? status.ToString() : message,
-                stackTrace, content);
+                stackTrace, traceId, content);
+
+        /// <summary>
+        /// Constrói container de retorno com base em uma mensagem de resposta de chamada HTTP
+        /// </summary>
+        /// <param name="httpResponseMessage">Mensagem de resposta de chamada HTTP</param>
+        /// <returns>Container de resposta</returns>
+        public static async Task<ActionResponse<TValue>> FromHttpResponse(HttpResponseMessage httpResponseMessage)
+        {
+            try
+            {
+                var messageContent = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                if (!httpResponseMessage.IsSuccessStatusCode)
+                    return ActionResponse<TValue>.Custom(httpResponseMessage.StatusCode, messageContent);
+
+                var responseContent = JsonSerializer.Deserialize<TValue>(messageContent);
+                return ActionResponse<TValue>.Ok(responseContent);
+            }
+            catch (Exception ex)
+            {
+                return ActionResponse<TValue>.InternalError(ex);
+            }
+        }
 
         /// <summary>
         /// Copia conteúdo de um container
@@ -229,9 +280,10 @@ namespace ArchitectureTools.Structs
         /// <typeparam name="Origin">Tipo do conteúdo do container de origem</typeparam>
         /// <param name="origin">Container de origem</param>
         /// <param name="content">Novo conteúdo</param>
-        /// <returns></returns>
-        public static AppResponse<T> Copy<Origin>(AppResponse<Origin> origin, T? content = null)
-            where Origin : class =>
-            new AppResponse<T>(origin.Status, origin.Message, origin.StackTrace, content);
+        /// <returns>Container de resposta</returns>
+        public static ActionResponse<TValue> Copy<Origin>(ActionResponse<Origin> origin,
+            TValue content = default) =>
+            new ActionResponse<TValue>(origin.Status, origin.Message, origin.StackTrace,
+                origin.TraceId, content);
     }
 }

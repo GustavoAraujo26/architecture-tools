@@ -1,8 +1,9 @@
 ﻿using ArchitectureTools.Enums;
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ArchitectureTools.Structs
+namespace ArchitectureTools.Entities
 {
     /// <summary>
     /// Estado da entidade
@@ -67,5 +68,18 @@ namespace ArchitectureTools.Structs
             State = ObjectState.Disabled;
             UpdatedAt = DateTime.Now;
         }
+
+        /// <summary>
+        /// Retorna JSON
+        /// </summary>
+        /// <returns>string de JSON</returns>
+        public override string ToString() => JsonSerializer.Serialize(this);
+
+        /// <summary>
+        /// Deserializa JSON
+        /// </summary>
+        /// <param name="json">JSON a ser deserializado</param>
+        /// <returns>Estado da entidade</returns>
+        public static EntityState Deserialize(string json) => JsonSerializer.Deserialize<EntityState>(json);
     }
 }

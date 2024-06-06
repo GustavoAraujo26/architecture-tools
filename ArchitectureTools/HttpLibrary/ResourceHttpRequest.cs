@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace ArchitectureTools.Models
+namespace ArchitectureTools.HttpLibrary
 {
     /// <summary>
     /// Requisição de chamadas para recurso (HTTP)
@@ -17,7 +15,7 @@ namespace ArchitectureTools.Models
         /// <param name="queryParameters">Parâmetros de pesquisa</param>
         /// <param name="requestContent">Conteúdo da requisição</param>
         /// <param name="authenticationToken">Token de autenticação</param>
-        public ResourceHttpRequest(string endpointKey, string[]? queryParameters = null, 
+        public ResourceHttpRequest(string endpointKey, string[]? queryParameters = null,
             T? requestContent = null, KeyValuePair<string, string>? authenticationToken = null)
         {
             EndpointKey = endpointKey;

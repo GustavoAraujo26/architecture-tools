@@ -1,4 +1,4 @@
-﻿namespace ArchitectureTools.Enums
+﻿namespace ArchitectureTools.Event
 {
     /// <summary>
     /// Status da mensagem do evento

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ArchitectureTools.Exceptions;
-using ArchitectureTools.Models;
 
-namespace ArchitectureTools.Singletons
+namespace ArchitectureTools.HttpLibrary
 {
     /// <summary>
     /// Biblioteca de API's com seus endpoints para consumo
@@ -50,7 +47,7 @@ namespace ArchitectureTools.Singletons
         /// </summary>
         /// <param name="key">Chave do recurso</param>
         /// <returns>Recurso da API</returns>
-        public ApiResource GetResource(string key) => 
+        public ApiResource GetResource(string key) =>
             _apiResources.FirstOrDefault(x => x.Key == key);
     }
 }

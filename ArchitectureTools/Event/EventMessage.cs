@@ -1,16 +1,15 @@
-﻿using ArchitectureTools.Enums;
-using System;
+﻿using System;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ArchitectureTools.Structs
+namespace ArchitectureTools.Event
 {
     /// <summary>
     /// Mensagem de evento
     /// </summary>
-    /// <typeparam name="T">Tipo do conteúdo da mensagem</typeparam>
-    public struct EventMessage<T> where T : struct
+    /// <typeparam name="TResult">Tipo do conteúdo da mensagem</typeparam>
+    public struct EventMessage<TResult>
     {
         /// <summary>
         /// Construtor para inicializar as propriedades
@@ -21,8 +20,8 @@ namespace ArchitectureTools.Structs
         /// <param name="content">Conteúdo da mensagem</param>
         /// <param name="eventType">Tipo do evento</param>
         [JsonConstructor]
-        public EventMessage(Guid requestId, DateTime createdAt, 
-            string type, T content, EventMessageType eventType)
+        public EventMessage(Guid requestId, DateTime createdAt,
+            string type, TResult content, EventMessageType eventType)
         {
             RequestId = requestId;
             CreatedAt = createdAt;
@@ -49,7 +48,7 @@ namespace ArchitectureTools.Structs
         /// <summary>
         /// Conteúdo da mensagem
         /// </summary>
-        public T Content { get; private set; }
+        public TResult Content { get; private set; }
 
         /// <summary>
         /// Tipo do evento
@@ -60,16 +59,13 @@ namespace ArchitectureTools.Structs
         /// Retorna JSON da mensagem
         /// </summary>
         /// <returns>JSON</returns>
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this);
-        }
+        public override string ToString() => JsonSerializer.Serialize(this);
 
         /// <summary>
         /// Retorna array de bytes da mensagem
         /// </summary>
         /// <returns>Array de bytes</returns>
-        public ReadOnlyMemory<byte> ToBytes() => 
+        public ReadOnlyMemory<byte> ToBytes() =>
             Encoding.UTF8.GetBytes(ToString());
 
         /// <summary>
@@ -77,7 +73,7 @@ namespace ArchitectureTools.Structs
         /// </summary>
         /// <param name="bytes">Array de bytes</param>
         /// <returns>Mensagem do evento</returns>
-        public static EventMessage<T> FromBytes(byte[] bytes) =>
+        public static EventMessage<TResult> FromBytes(byte[] bytes) =>
             FromJson(Encoding.UTF8.GetString(bytes));
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace ArchitectureTools.Structs
         /// </summary>
         /// <param name="json">JSON</param>
         /// <returns>Mensagem do evento</returns>
-        public static EventMessage<T> FromJson(string json) =>
-            JsonSerializer.Deserialize<EventMessage<T>>(json);
+        public static EventMessage<TResult> FromJson(string json) =>
+            JsonSerializer.Deserialize<EventMessage<TResult>>(json);
     }
 }

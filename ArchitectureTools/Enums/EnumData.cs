@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ArchitectureTools.Structs
+namespace ArchitectureTools.Enums
 {
     /// <summary>
     /// Dados de uma opção de enumerador

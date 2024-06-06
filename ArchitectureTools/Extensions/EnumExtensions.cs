@@ -1,4 +1,4 @@
-﻿using ArchitectureTools.Structs;
+﻿using ArchitectureTools.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

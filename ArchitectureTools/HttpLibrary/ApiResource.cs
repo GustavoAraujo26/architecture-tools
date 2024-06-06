@@ -1,6 +1,6 @@
 ﻿using ArchitectureTools.Exceptions;
 using ArchitectureTools.Extensions;
-using ArchitectureTools.Structs;
+using ArchitectureTools.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ArchitectureTools.Models
+namespace ArchitectureTools.HttpLibrary
 {
     /// <summary>
     /// Recurso para API's
@@ -64,7 +64,7 @@ namespace ArchitectureTools.Models
         /// <typeparam name="TResponse">Tipo do conteúdo de resposta</typeparam>
         /// <param name="resourceRequest">Container de requisição para realizar as chamadas</param>
         /// <returns>Container de resposta da chamada HTTP</returns>
-        public async Task<AppResponse<TResponse>> Call<TRequest, TResponse>(ResourceHttpRequest<TRequest> resourceRequest)
+        public async Task<ActionResponse<TResponse>> Call<TRequest, TResponse>(ResourceHttpRequest<TRequest> resourceRequest)
             where TRequest : class
             where TResponse : class
         {
@@ -72,7 +72,7 @@ namespace ArchitectureTools.Models
             {
                 ApiEndpoint endpoint = Endpoints.FirstOrDefault(x => x.Key.Equals(resourceRequest.EndpointKey));
                 if (endpoint == null)
-                    return AppResponse<TResponse>.BadRequest($"Endpoint {resourceRequest.EndpointKey} not found!");
+                    return ActionResponse<TResponse>.BadRequest($"Endpoint {resourceRequest.EndpointKey} not found!");
 
                 string requestUri = BuildRequestUri(endpoint.Resource, resourceRequest.QueryParameters);
 
@@ -86,9 +86,9 @@ namespace ArchitectureTools.Models
                     return await httpResponse.ToAppResponse<TResponse>();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return AppResponse<TResponse>.InternalError(ex);
+                return ActionResponse<TResponse>.InternalError(ex);
             }
         }
 
@@ -101,7 +101,7 @@ namespace ArchitectureTools.Models
             return requestUri;
         }
 
-        private void ConfigureBasicHttpData(HttpClient client, 
+        private void ConfigureBasicHttpData(HttpClient client,
             KeyValuePair<string, string>? authenticationToken = null)
         {
             client.BaseAddress = new Uri(BaseUrl);
@@ -111,7 +111,7 @@ namespace ArchitectureTools.Models
                     $"{authenticationToken.Value.Key} {authenticationToken.Value.Value}");
         }
 
-        private HttpRequestMessage BuildRequestMessage<TRequest>(HttpMethod httpMethod, 
+        private HttpRequestMessage BuildRequestMessage<TRequest>(HttpMethod httpMethod,
             string requestUri, TRequest? request = null) where TRequest : class
         {
             var requestMessage = new HttpRequestMessage(httpMethod, requestUri);
@@ -124,7 +124,7 @@ namespace ArchitectureTools.Models
                 }
                 else
                 {
-                    var dictionaryContent = (Dictionary<string, string>)Convert.ChangeType(request, 
+                    var dictionaryContent = (Dictionary<string, string>)Convert.ChangeType(request,
                         typeof(Dictionary<string, string>));
                     requestMessage.Content = new FormUrlEncodedContent(dictionaryContent);
                 }

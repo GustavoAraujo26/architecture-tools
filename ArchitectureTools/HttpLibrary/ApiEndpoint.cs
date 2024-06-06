@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace ArchitectureTools.Models
+namespace ArchitectureTools.HttpLibrary
 {
     /// <summary>
     /// Endpoint de uma API
@@ -36,7 +36,7 @@ namespace ArchitectureTools.Models
         /// <param name="resource">Recurso (parte final da URL)</param>
         /// <param name="method">Método HTTP</param>
         /// <returns></returns>
-        public static ApiEndpoint Create(string key, string resource, HttpMethod method) => 
+        public static ApiEndpoint Create(string key, string resource, HttpMethod method) =>
             new ApiEndpoint(key, resource, method);
     }
 }

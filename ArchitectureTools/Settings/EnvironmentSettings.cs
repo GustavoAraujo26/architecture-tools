@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ArchitectureTools.Singletons
+namespace ArchitectureTools.Settings
 {
     /// <summary>
-    /// Configuração do sistema. Implementa o design pattern "Options"
+    /// Configuração do sistema. Implementa o design pattern "Options" voltado para variáveis de ambiente
     /// </summary>
     public sealed class EnvironmentSettings
     {

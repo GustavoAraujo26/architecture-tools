@@ -1,4 +1,4 @@
-﻿using ArchitectureTools.Singletons;
+﻿using ArchitectureTools.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
