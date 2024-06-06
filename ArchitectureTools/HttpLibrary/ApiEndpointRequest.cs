@@ -5,8 +5,8 @@ namespace ArchitectureTools.HttpLibrary
     /// <summary>
     /// Requisição de chamadas para recurso (HTTP)
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public sealed class ResourceHttpRequest<T> where T : class
+    /// <typeparam name="TResult"></typeparam>
+    public sealed class ApiEndpointRequest<TResult>
     {
         /// <summary>
         /// Construtor para inicializar as propriedades
@@ -15,8 +15,8 @@ namespace ArchitectureTools.HttpLibrary
         /// <param name="queryParameters">Parâmetros de pesquisa</param>
         /// <param name="requestContent">Conteúdo da requisição</param>
         /// <param name="authenticationToken">Token de autenticação</param>
-        public ResourceHttpRequest(string endpointKey, string[]? queryParameters = null,
-            T? requestContent = null, KeyValuePair<string, string>? authenticationToken = null)
+        public ApiEndpointRequest(string endpointKey, string[]? queryParameters = null,
+            TResult requestContent = default(TResult), KeyValuePair<string, string>? authenticationToken = null)
         {
             EndpointKey = endpointKey;
             QueryParameters = queryParameters;
@@ -37,7 +37,7 @@ namespace ArchitectureTools.HttpLibrary
         /// <summary>
         /// Conteúdo da requisição
         /// </summary>
-        public T? RequestContent { get; private set; }
+        public TResult RequestContent { get; private set; }
 
         /// <summary>
         /// Token de autenticação

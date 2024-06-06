@@ -64,9 +64,7 @@ namespace ArchitectureTools.HttpLibrary
         /// <typeparam name="TResponse">Tipo do conteúdo de resposta</typeparam>
         /// <param name="resourceRequest">Container de requisição para realizar as chamadas</param>
         /// <returns>Container de resposta da chamada HTTP</returns>
-        public async Task<ActionResponse<TResponse>> Call<TRequest, TResponse>(ResourceHttpRequest<TRequest> resourceRequest)
-            where TRequest : class
-            where TResponse : class
+        public async Task<ActionResponse<TResponse>> Call<TRequest, TResponse>(ApiEndpointRequest<TRequest> resourceRequest)
         {
             try
             {
@@ -112,7 +110,7 @@ namespace ArchitectureTools.HttpLibrary
         }
 
         private HttpRequestMessage BuildRequestMessage<TRequest>(HttpMethod httpMethod,
-            string requestUri, TRequest? request = null) where TRequest : class
+            string requestUri, TRequest request = default(TRequest))
         {
             var requestMessage = new HttpRequestMessage(httpMethod, requestUri);
 

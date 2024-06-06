@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ArchitectureTools.HttpLibrary;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace ArchitectureTools.Extensions
@@ -16,5 +17,13 @@ namespace ArchitectureTools.Extensions
         /// <returns></returns>
         public static T GetService<T>(this IServiceProvider serviceProvider) where T : class => 
             serviceProvider.GetRequiredService<T>();
+
+        /// <summary>
+        /// Configura a injeção de dependência de uma coleção de chamadas HTTP para API's
+        /// </summary>
+        /// <param name="services">Interface da coleção de serviços</param>
+        /// <param name="apiCollection">Coleção de API's para realizar chamadas HTTP</param>
+        public static void ConfigureApiCollection(this IServiceCollection services, ApiHttpCollection apiCollection) =>
+            services.AddSingleton(apiCollection);
     }
 }

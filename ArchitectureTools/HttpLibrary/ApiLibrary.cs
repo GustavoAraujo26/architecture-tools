@@ -9,23 +9,14 @@ namespace ArchitectureTools.HttpLibrary
     /// </summary>
     public sealed class ApiLibrary
     {
-        private static ApiLibrary _instance;
         private List<ApiResource> _apiResources;
 
-        private ApiLibrary()
+        /// <summary>
+        /// Cria nova instância de biblioteca de recursos de uma API específica
+        /// </summary>
+        public ApiLibrary()
         {
             _apiResources = new List<ApiResource>();
-        }
-
-        /// <summary>
-        /// Instância da biblioteca
-        /// </summary>
-        public ApiLibrary Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new ApiLibrary());
-            }
         }
 
         /// <summary>
