@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>GustavoAraujo26.ArchitectureTools</id>
+    <version>1.0.0</version>
+    <authors>Gustavo de Araujo Oliveira</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!-- <license type="expression">MIT</license> -->
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/GustavoAraujo26/architecture-tools</projectUrl>
+    <description>
+      Pacote para auxiliar na criação de novas aplicações, contendo algumas classes 
+      implementando alguns padrões de projeto (como pattern "Result", "Options", etc), além de algumas ferramentas auxiliadoras, 
+      como por exemplo a criação de uma coleção de endereços de API para realizar chamadas HTTP.
+    </description>
+    <releaseNotes>Criação inicial do pacote</releaseNotes>
+    <!-- <copyright>$copyright$</copyright>
+    <tags>Tag1 Tag2</tags> -->
+    <dependencies>
+      <group targetFramework="uap">
+        <dependency id="Microsoft.AspNetCore.WebUtilities" version="2.1.1" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.32" />
+        <dependency id="System.Text.Json" version="8.0.3" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.1\ArchitectureTools.dll" target="lib\netstandard2.1\ArchitectureTools.dll"/>
+    <file src="bin\Release\netstandard2.1\ArchitectureTools.xml" target="lib\netstandard2.1\ArchitectureTools.xml"/>
+  </files>
+</package>

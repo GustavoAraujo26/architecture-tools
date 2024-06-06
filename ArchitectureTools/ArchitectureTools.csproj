@@ -3,16 +3,36 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <PackageId>GustavoAraujo26.$(AssemblyName)</PackageId>
+    <Title>Ferramentas para construção de arquiteturas</Title>
+    <Description>Pacote para auxiliar na criação de novas aplicações, contendo algumas classes implementando alguns padrões de projeto (como pattern "Result", "Options", etc), além de algumas ferramentas auxiliadoras, como por exemplo a criação de uma coleção de endereços de API para realizar chamadas HTTP.</Description>
+    <PackageProjectUrl>https://github.com/GustavoAraujo26/architecture-tools</PackageProjectUrl>
+    <PackageReleaseNotes>Criação inicial do projeto</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>README.md</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.32" />
+    <PackageReference Include="Nuget.CommandLine" Version="6.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Structs\" />
   </ItemGroup>
 
 </Project>
