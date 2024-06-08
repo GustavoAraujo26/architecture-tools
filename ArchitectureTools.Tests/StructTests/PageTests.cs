@@ -9,7 +9,7 @@ namespace ArchitectureTools.Tests.StructTests
         {
             int totalItems = 20;
 
-            var page = new Page(1, 10, totalItems);
+            var page = Page.Create(1, 10, totalItems);
 
             Assert.Equal(2, page.LastPage);
             Assert.Equal(1, page.NextPages.Count);
@@ -22,7 +22,7 @@ namespace ArchitectureTools.Tests.StructTests
         {
             int totalItems = 28;
 
-            var page = new Page(1, 10, totalItems);
+            var page = Page.Create(1, 10, totalItems);
 
             Assert.Equal(3, page.LastPage);
             Assert.Equal(2, page.NextPages.Count);
@@ -35,7 +35,7 @@ namespace ArchitectureTools.Tests.StructTests
         {
             int totalItems = 28;
 
-            var page = new Page(2, 10, totalItems);
+            var page = Page.Create(2, 10, totalItems);
 
             Assert.Equal(3, page.LastPage);
             Assert.Equal(1, page.NextPages.Count);
@@ -48,7 +48,7 @@ namespace ArchitectureTools.Tests.StructTests
         {
             int totalItems = 28;
 
-            var page = new Page(3, 10, totalItems);
+            var page = Page.Create(3, 10, totalItems);
 
             Assert.NotNull(page.LastPage);
             Assert.Equal(2, page.PreviousPages.Count);
@@ -61,7 +61,7 @@ namespace ArchitectureTools.Tests.StructTests
         [InlineData(50, 10, 105678)]
         public void ShouldReturnSuccess_WhenLargeItems(int pageSelected, int pageSize, int totalItems)
         {
-            var page = new Page(pageSelected, pageSize, totalItems);
+            var page = Page.Create(pageSelected, pageSize, totalItems);
 
             Assert.NotNull(page.LastPage);
             Assert.NotEmpty(page.NextPages);
@@ -70,7 +70,7 @@ namespace ArchitectureTools.Tests.StructTests
         [Fact]
         public void ShouldReturnSuccess_WhenEmptyItemCount()
         {
-            var page = new Page(1, 10);
+            var page = new Page(1, 10, null);
 
             Assert.Null(page.LastPage);
             Assert.Null(page.Next);

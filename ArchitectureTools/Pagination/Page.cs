@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ArchitectureTools.Pagination
 {
@@ -12,15 +13,13 @@ namespace ArchitectureTools.Pagination
         /// </summary>
         /// <param name="selected">Página selecionada</param>
         /// <param name="size">Tamanho da página</param>
-        /// <param name="itemCount">Quantidade de itens a serem paginados</param>
-        public Page(int selected, int size, int? itemCount = null)
+        /// <param name="lastPage">Última página</param>
+        [JsonConstructor]
+        public Page(int selected, int size, int? lastPage)
         {
             Selected = selected;
             Size = size;
-            LastPage = null;
-
-            if (itemCount.HasValue)
-                LastPage = CalculateLastPage(itemCount.Value, size);
+            LastPage = lastPage;
         }
 
         /// <summary>
@@ -144,7 +143,17 @@ namespace ArchitectureTools.Pagination
             }
         }
 
-        private int? CalculateLastPage(int listCount, int pageSize)
+        /// <summary>
+        /// Cria nova página, calculando os dados com base na quantidade total de itens
+        /// </summary>
+        /// <param name="selectedPage">Página selecionada</param>
+        /// <param name="pageSize">Tamanho da página</param>
+        /// <param name="totalItems">Quantidade de itens a serem paginados</param>
+        /// <returns></returns>
+        public static Page Create(int selectedPage, int pageSize, int totalItems) =>
+            new Page(selectedPage, pageSize, CalculateLastPage(totalItems, pageSize));
+
+        private static int? CalculateLastPage(int listCount, int pageSize)
         {
             if (listCount == 0 || pageSize == 0)
                 return null;
