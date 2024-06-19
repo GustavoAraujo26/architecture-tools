@@ -83,3 +83,5 @@ Foram criadas algumas extensões para auxiliar e agilizar a utilização da bibl
 - [ToAppResponse](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/HttpClientExtensions.cs): Extensão do HTTPResponseMessage para realizar conversão para o [ActionResponse](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Responses/ActionResponse.cs).
 
 - [GetDescription - HTTPStatusCode](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/HttpStatusCodeExtensions.cs): Extensõa do enumerador HttpStatusCode para obter a "descrição" da opção do enumerador ("ReasonPhrase").
+
+- [Truncate - HTTPStatusCode](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/StringExtensions.cs): Extensão para "truncar" uma string com base em uma quantidade máxima de caracteres.
