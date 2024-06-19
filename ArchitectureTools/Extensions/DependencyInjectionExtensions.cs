@@ -14,9 +14,21 @@ namespace ArchitectureTools.Extensions
         /// </summary>
         /// <typeparam name="T">Tipo da classe do serviço</typeparam>
         /// <param name="serviceProvider">Provedor de serviço</param>
-        /// <returns></returns>
+        /// <returns>Serviços requisitado</returns>
         public static T GetService<T>(this IServiceProvider serviceProvider) where T : class => 
             serviceProvider.GetRequiredService<T>();
+
+        /// <summary>
+        /// Obtém um serviço dentro de uma coleção de serviços
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="services">Interface da coleção de serviços</param>
+        /// <returns>Serviços requisitado</returns>
+        public static T GetService<T>(this IServiceCollection services) where T : class
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            return serviceProvider.GetRequiredService<T>();
+        }
 
         /// <summary>
         /// Configura a injeção de dependência de uma coleção de chamadas HTTP para API's

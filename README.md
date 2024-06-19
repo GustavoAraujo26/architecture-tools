@@ -60,7 +60,7 @@ Container para obter dados de uma opção de enumerador. Possui como propriedade
 
 Container que controla paginação a ser realizada em uma lista de itens. No mesmo é possível calcular a quantidade de páginas disponíveis (anteriores e próximas). Nas listagens de páginas anteriores e próximas páginas, o limite da lista está como 5 itens.
 
-- [PaginationResponse]():
+- [PaginationResponse](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Pagination/PaginationResponse.cs):
 
 Container para retorno de dados paginados. Possui duas propriedades: ["Page"](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Pagination/Page.cs) e "Content" (uma lista de objetos).
 
@@ -72,7 +72,7 @@ Foram criadas algumas extensões para auxiliar e agilizar a utilização da bibl
 
 - [ConfigureApiCollection](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/DependencyInjectionExtensions.cs): Extensão do IServiceCollection para injetar a classe [ApiHttpCollection](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/HttpLibrary/ApiHttpCollection.cs).
 
-- [GetDescription - Enum](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/EnumExtensions.cs): Extensõa de Enum para obter o valor do atributo "Descrição".
+- [GetDescription - Enum](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/EnumExtensions.cs): Extensão de Enum para obter o valor do atributo "Descrição".
 
 - [GetData](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Extensions/EnumExtensions.cs): Extensão de Enum para obter os dados do item do enumerador, através do [EnumData](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Enums/EnumData.cs).
 

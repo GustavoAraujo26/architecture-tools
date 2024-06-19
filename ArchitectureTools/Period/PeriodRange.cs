@@ -45,7 +45,7 @@ namespace ArchitectureTools.Period
             if (Start > End)
                 errors.Add("Data de inicio não pode ser maior que data de termino");
 
-            if (errors.Count > 0)
+            if (errors.Count == 0)
                 return ActionResponse<object>.Ok();
             else
                 return ActionResponse<object>.UnprocessableEntity(errors);

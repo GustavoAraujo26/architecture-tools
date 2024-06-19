@@ -7,12 +7,12 @@
     <Title>Ferramentas para construção de arquiteturas</Title>
     <Description>Pacote para auxiliar na criação de novas aplicações, contendo algumas classes implementando alguns padrões de projeto (como pattern "Result", "Options", etc), além de algumas ferramentas auxiliadoras, como por exemplo a criação de uma coleção de endereços de API para realizar chamadas HTTP.</Description>
     <PackageProjectUrl>https://github.com/GustavoAraujo26/architecture-tools</PackageProjectUrl>
-    <PackageReleaseNotes>Criação da struct de paginação de lista de itens</PackageReleaseNotes>
+    <PackageReleaseNotes>Correção de bug na validação da struct PeriodRange e criação da extensão "Truncate" para strings</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>icon.png</PackageIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>1.2.0</Version>
+    <Version>1.2.2</Version>
     <Authors>Gustavo de Araujo Oliveira</Authors>
   </PropertyGroup>
 
@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.32" />
     <PackageReference Include="Nuget.CommandLine" Version="6.10.0">
       <PrivateAssets>all</PrivateAssets>
