@@ -11,6 +11,11 @@ namespace ArchitectureTools.Period
     /// </summary>
     public struct PeriodRange
     {
+        /// <summary>
+        /// Construtor para deserialização de JSON
+        /// </summary>
+        /// <param name="start">Data de início</param>
+        /// <param name="end">Data de término</param>
         [JsonConstructor]
         public PeriodRange(DateTime start, DateTime end)
         {
