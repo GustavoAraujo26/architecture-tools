@@ -130,12 +130,14 @@ namespace ArchitectureTools.Security
         /// Valida a senha informada com base nas regras estabelecidas
         /// </summary>
         /// <param name="password">Senha informada</param>
+        /// <param name="privateKey">Chave privada da aplicação</param>
         /// <returns>Resposta da validação da senha</returns>
-        public PasswordStrengthResponse Validate(Password password)
+        public PasswordStrengthResponse Validate(Password password, string privateKey)
         {
+            string passwordDecrypted = password.GetDecryptedValue(privateKey);
             var score = PasswordStrengthScore.Strong;
             var brokenRules = new Dictionary<PasswordStrengthRule, string>();
-
+            
             foreach(var rule in Rules)
             {
                 bool broken = false;
@@ -144,28 +146,29 @@ namespace ArchitectureTools.Security
                 {
                     case PasswordStrengthRule.MinimumLength:
                         int minLength = GetLengthValue(rule.Key);
-                        broken = password.Value.Length < minLength;
+                        broken = passwordDecrypted.Length < minLength;
                         break;
                     case PasswordStrengthRule.MaximumLength:
                         int maxLength = GetLengthValue(rule.Key);
-                        broken = password.Value.Length > maxLength;
+                        broken = passwordDecrypted.Length > maxLength;
                         break;
                     case PasswordStrengthRule.Numbers:
-                        var numbersResult = Regex.Match(password.Value, @"/\d+/", RegexOptions.ECMAScript);
+                        var numbersResult = new Regex("(?=.*\\d)").Match(passwordDecrypted);
                         broken = numbersResult != null && !numbersResult.Success;
                         break;
                     case PasswordStrengthRule.UppercaseLetters:
-                        var upperCaseResult = Regex.Match(password.Value, @"/[a-z]/", RegexOptions.ECMAScript);
+                        var upperCaseResult = new Regex("(?=.*[A-Z])").Match(passwordDecrypted);
                         broken = upperCaseResult != null && !upperCaseResult.Success;
                         break;
                     case PasswordStrengthRule.LowercaseLetters:
-                        var lowerCaseResult = Regex.Match(password.Value, @"/[A-Z]/", RegexOptions.ECMAScript);
+                        var lowerCaseResult = new Regex("(?=.*[a-z])").Match(passwordDecrypted);
                         broken = lowerCaseResult != null && !lowerCaseResult.Success;
                         break;
                     case PasswordStrengthRule.SpecialCharacters:
-                        var specialCharactersResult = Regex.Match(password.Value, @"/.[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]/", 
-                            RegexOptions.ECMAScript);
+                        var specialCharactersResult = new Regex("(?=.*[-+_!@#$%^&*., ?])").Match(passwordDecrypted);
                         broken = specialCharactersResult != null && !specialCharactersResult.Success;
+                        break;
+                    default:
                         break;
                 }
 
@@ -181,7 +184,7 @@ namespace ArchitectureTools.Security
             if (brokenRules.Count == 0)
                 return PasswordStrengthResponse.BuildValid();
             else
-                return PasswordStrengthResponse.BuildInvalid(Rules, score);
+                return PasswordStrengthResponse.BuildInvalid(brokenRules, score);
         }
         #endregion
 

@@ -1,6 +1,6 @@
 ﻿using ArchitectureTools.Security;
 
-namespace ArchitectureTools.Tests.FactoryTests
+namespace ArchitectureTools.Tests.Security
 {
     public class CryptographyFactoryTests
     {

@@ -37,6 +37,14 @@ namespace ArchitectureTools.Security
         }
 
         /// <summary>
+        /// Descriptografa da senha
+        /// </summary>
+        /// <param name="privateKey">Chave privada da aplicação</param>
+        /// <returns>Senha descriptografada</returns>
+        public string GetDecryptedValue(string privateKey) =>
+            CryptographyFactory.DecryptData(Value, privateKey);
+
+        /// <summary>
         /// Constrói nova senha criptografada
         /// </summary>
         /// <param name="password">Senha informada</param>
