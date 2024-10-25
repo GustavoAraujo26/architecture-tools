@@ -64,6 +64,26 @@ Container que controla paginação a ser realizada em uma lista de itens. No mes
 
 Container para retorno de dados paginados. Possui duas propriedades: ["Page"](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Pagination/Page.cs) e "Content" (uma lista de objetos).
 
+- [CryptographyFactory](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Security/CryptographyFactory.cs):
+
+Fábrica para manipulação de criptografia de textos, utilizando SHA256 e AES.
+
+- [Password](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Security/Password.cs):
+
+Struct para manipulação de senhas de usuários, utilizando criptografia o valor inserido.
+
+- [PasswordRules](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Security/PasswordRules.cs):
+
+Classe para realizar validações de integridade de senhas informadas.
+
+- [SecurityKey](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Security/SecurityKey.cs):
+
+Struct de geração de chaves aleatórias de 6 caracteres, muito utilizado em autenticações de múltiplos fatores.
+
+- [ExpirationDate](https://github.com/GustavoAraujo26/architecture-tools/blob/master/ArchitectureTools/Period/ExpirationDate.cs):
+
+Struct para geração de datas de expiração, permitindo realizar comparativos, capturar diferenças entre datas, etc.
+
 > ### Extensões
 
 Foram criadas algumas extensões para auxiliar e agilizar a utilização da biblioteca.
