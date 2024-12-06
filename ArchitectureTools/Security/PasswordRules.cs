@@ -31,6 +31,7 @@ namespace ArchitectureTools.Security
         /// <summary>
         /// Lista de regras
         /// </summary>
+        [JsonInclude]
         public Dictionary<PasswordStrengthRule, string> Rules { get; private set; }
 
         #region [Métodos de manipulação]

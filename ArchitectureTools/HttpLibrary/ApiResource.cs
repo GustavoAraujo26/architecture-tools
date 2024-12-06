@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ArchitectureTools.HttpLibrary
@@ -31,16 +32,19 @@ namespace ArchitectureTools.HttpLibrary
         /// <summary>
         /// Chave identificadora da API
         /// </summary>
+        [JsonInclude]
         public string Key { get; private set; }
 
         /// <summary>
         /// URL-base da API
         /// </summary>
+        [JsonInclude]
         public string BaseUrl { get; private set; }
 
         /// <summary>
         /// Lista de endpoints disponíveis para a API
         /// </summary>
+        [JsonInclude]
         public List<ApiEndpoint> Endpoints { get; private set; }
 
         /// <summary>

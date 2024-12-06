@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text.Json.Serialization;
 
 namespace ArchitectureTools.HttpLibrary
 {
@@ -17,16 +18,19 @@ namespace ArchitectureTools.HttpLibrary
         /// <summary>
         /// Chave identificadora
         /// </summary>
+        [JsonInclude]
         public string Key { get; private set; }
 
         /// <summary>
         /// Recurso (parte final da URL)
         /// </summary>
+        [JsonInclude]
         public string Resource { get; private set; }
 
         /// <summary>
         /// Método HTTP
         /// </summary>
+        [JsonInclude]
         public HttpMethod HttpMethod { get; private set; }
 
         /// <summary>

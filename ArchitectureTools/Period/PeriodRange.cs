@@ -26,11 +26,13 @@ namespace ArchitectureTools.Period
         /// <summary>
         /// Data de início
         /// </summary>
+        [JsonInclude]
         public DateTime Start { get; private set; }
 
         /// <summary>
         /// Data de término
         /// </summary>
+        [JsonInclude]
         public DateTime End { get; private set; }
 
         /// <summary>

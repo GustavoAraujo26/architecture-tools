@@ -21,6 +21,7 @@ namespace ArchitectureTools.Security
         /// <summary>
         /// Valor da senha
         /// </summary>
+        [JsonInclude]
         public string Value { get; private set; }
 
         /// <summary>

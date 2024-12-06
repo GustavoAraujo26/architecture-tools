@@ -79,5 +79,19 @@ namespace ArchitectureTools.Tests.StructTests
             Assert.NotNull(appResponse);
             Assert.False(appResponse.IsSuccess);
         }
+
+        [Fact]
+        public void ShouldReturnFailure_WhenValidationResponseList()
+        {
+            var validations = new List<ValidationResponse>();
+
+            for (int i = 1; i <= 5; i++)
+                validations.Add(ValidationResponse.Build($"Error {i}", i.ToString(), $"Property {i}"));
+
+            var appResponse = ActionResponse<ModelTest>.UnprocessableEntity(validations);
+
+            Assert.False(appResponse.IsSuccess);
+            Assert.NotEmpty(appResponse.Validations);
+        }
     }
 }

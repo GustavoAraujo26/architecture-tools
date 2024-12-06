@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ArchitectureTools.Pagination
@@ -25,16 +26,19 @@ namespace ArchitectureTools.Pagination
         /// <summary>
         /// Página selecionada
         /// </summary>
+        [JsonInclude]
         public int Selected { get; private set; }
 
         /// <summary>
         /// Tamanho da página
         /// </summary>
+        [JsonInclude]
         public int Size { get; private set; }
 
         /// <summary>
         /// Última página
         /// </summary>
+        [JsonInclude]
         public int? LastPage { get; private set; }
 
         /// <summary>
@@ -144,6 +148,13 @@ namespace ArchitectureTools.Pagination
         }
 
         /// <summary>
+        /// Converte página em JSON
+        /// </summary>
+        /// <returns>JSON</returns>
+        public override string ToString() => 
+            JsonSerializer.Serialize(this);
+
+        /// <summary>
         /// Cria nova página, calculando os dados com base na quantidade total de itens
         /// </summary>
         /// <param name="selectedPage">Página selecionada</param>
@@ -152,6 +163,14 @@ namespace ArchitectureTools.Pagination
         /// <returns></returns>
         public static Page Create(int selectedPage, int pageSize, int totalItems) =>
             new Page(selectedPage, pageSize, CalculateLastPage(totalItems, pageSize));
+
+        /// <summary>
+        /// Deserializa o JSON nos dados da página
+        /// </summary>
+        /// <param name="json">JSON</param>
+        /// <returns>Dados da página</returns>
+        public static Page Deserialize(string json) => 
+            JsonSerializer.Deserialize<Page>(json);
 
         private static int? CalculateLastPage(int listCount, int pageSize)
         {

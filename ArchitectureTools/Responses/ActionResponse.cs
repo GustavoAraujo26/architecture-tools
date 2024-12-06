@@ -23,41 +23,59 @@ namespace ArchitectureTools.Responses
         /// <param name="stackTrace">Rastreamento de pilha</param>
         /// <param name="traceId">ID de rastreamento</param>
         /// <param name="content">Conteúdo do container para retorno</param>
+        /// <param name="validations">Lista de validações</param>
         [JsonConstructor]
         public ActionResponse(HttpStatusCode status, string message,
-            string? stackTrace = null, string? traceId = null, TValue content = default)
+            string? stackTrace = null, string? traceId = null, TValue content = default, 
+            List<ValidationResponse> validations = null)
         {
             Status = status;
             Message = message;
             StackTrace = stackTrace;
             TraceId = traceId;
             Content = content;
+
+            if (validations is null)
+                Validations = new List<ValidationResponse>();
+            else
+                Validations = validations;
         }
 
         /// <summary>
         /// Status
         /// </summary>
+        [JsonInclude]
         public HttpStatusCode Status { get; private set; }
 
         /// <summary>
         /// Mensagem
         /// </summary>
+        [JsonInclude]
         public string Message { get; private set; }
 
         /// <summary>
         /// Rastreamento de pilha
         /// </summary>
+        [JsonInclude]
         public string? StackTrace { get; private set; }
 
         /// <summary>
         /// Id de rastreamento
         /// </summary>
+        [JsonInclude]
         public string? TraceId { get; private set; }
 
         /// <summary>
         /// Conteúdo do container para retorno
         /// </summary>
+        [JsonInclude]
         public TValue Content { get; private set; }
+
+        /// <summary>
+        /// Lista de validações
+        /// </summary>
+        [JsonInclude]
+        public List<ValidationResponse> Validations { get; private set; }
 
         /// <summary>
         /// Verifica se o status do processamento é de sucesso
@@ -226,6 +244,14 @@ namespace ArchitectureTools.Responses
         }
 
         /// <summary>
+        /// Constrói container de retorno de validação, através de lista de validações
+        /// </summary>
+        /// <param name="validations">Lista de validações</param>
+        /// <returns>Container de resposta</returns>
+        public static ActionResponse<TValue> UnprocessableEntity(List<ValidationResponse> validations) =>
+            new ActionResponse<TValue>(HttpStatusCode.UnprocessableEntity, null, null, null, default, validations);
+
+        /// <summary>
         /// Constrói container de retorno de "não autorizado", 
         /// com possibilidade de mensagem de retorno e caminho do sistema
         /// </summary>
@@ -284,6 +310,6 @@ namespace ArchitectureTools.Responses
         public static ActionResponse<TValue> Copy<Origin>(ActionResponse<Origin> origin,
             TValue content = default) =>
             new ActionResponse<TValue>(origin.Status, origin.Message, origin.StackTrace,
-                origin.TraceId, content);
+                origin.TraceId, content, origin.Validations);
     }
 }

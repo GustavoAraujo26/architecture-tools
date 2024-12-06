@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArchitectureTools.Enums;
+using System;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -33,26 +34,31 @@ namespace ArchitectureTools.Event
         /// <summary>
         /// ID da requisição
         /// </summary>
+        [JsonInclude]
         public Guid RequestId { get; private set; }
 
         /// <summary>
         /// Data de criação
         /// </summary>
+        [JsonInclude]
         public DateTime CreatedAt { get; private set; }
 
         /// <summary>
         /// Tipo da mensagem
         /// </summary>
+        [JsonInclude]
         public string Type { get; private set; }
 
         /// <summary>
         /// Conteúdo da mensagem
         /// </summary>
+        [JsonInclude]
         public TResult Content { get; private set; }
 
         /// <summary>
         /// Tipo do evento
         /// </summary>
+        [JsonInclude]
         public EventMessageType EventType { get; private set; }
 
         /// <summary>

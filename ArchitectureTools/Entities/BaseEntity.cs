@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace ArchitectureTools.Entities
 {
@@ -11,21 +12,23 @@ namespace ArchitectureTools.Entities
         /// Construtor para inicializar as propriedades
         /// </summary>
         /// <param name="id">Identificador da entidade</param>
-        /// <param name="state">Estado da entidade</param>
-        protected BaseEntity(Guid id, EntityState state)
+        /// <param name="stateControl">Estado da entidade</param>
+        protected BaseEntity(Guid id, EntityState stateControl)
         {
             Id = id;
-            State = state;
+            StateControl = stateControl;
         }
 
         /// <summary>
         /// Identificador da entidade
         /// </summary>
+        [JsonInclude]
         public Guid Id { get; private set; }
 
         /// <summary>
         /// Estado da entidade
         /// </summary>
-        public EntityState State { get; private set; }
+        [JsonInclude]
+        public EntityState StateControl { get; private set; }
     }
 }

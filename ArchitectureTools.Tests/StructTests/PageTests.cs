@@ -78,5 +78,18 @@ namespace ArchitectureTools.Tests.StructTests
             Assert.Empty(page.PreviousPages);
             Assert.Empty(page.NextPages);
         }
+
+        [Fact]
+        public void ShouldReturnSuccess_WhenDeserialize()
+        {
+            var page = new Page(1, 10, 5);
+
+            var json = page.ToString();
+            var newPage = Page.Deserialize(json);
+
+            Assert.NotEqual(newPage.Selected, 0);
+            Assert.NotEqual(newPage.Size, 0);
+            Assert.NotEqual(newPage.LastPage, 0);
+        }
     }
 }

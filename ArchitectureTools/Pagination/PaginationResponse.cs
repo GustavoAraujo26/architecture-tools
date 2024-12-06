@@ -26,11 +26,13 @@ namespace ArchitectureTools.Pagination
         /// <summary>
         /// Dados da página selecionada
         /// </summary>
+        [JsonInclude]
         public Page Page { get; private set; }
 
         /// <summary>
         /// Conteúdo da página (lista de itens)
         /// </summary>
+        [JsonInclude]
         public List<T> Content { get; private set; }
 
         /// <summary>

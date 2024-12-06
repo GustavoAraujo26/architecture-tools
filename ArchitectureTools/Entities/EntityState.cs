@@ -27,17 +27,42 @@ namespace ArchitectureTools.Entities
         /// <summary>
         /// Estado
         /// </summary>
+        [JsonInclude]
         public ObjectState State { get; private set; }
 
         /// <summary>
         /// Data de criação
         /// </summary>
+        [JsonInclude]
         public DateTime CreatedAt { get; private set; }
 
         /// <summary>
         /// Data de alteração
-        /// </summary>
+        /// </summary
+        [JsonInclude]
         public DateTime UpdatedAt { get; private set; }
+
+        /// <summary>
+        /// Habilitado?
+        /// </summary>
+        public bool Enabled
+        {
+            get
+            {
+                return State == ObjectState.Enabled;
+            }
+        }
+
+        /// <summary>
+        /// Desabilitado?
+        /// </summary>
+        public bool Disabled
+        {
+            get
+            {
+                return State == ObjectState.Disabled;
+            }
+        }
 
         /// <summary>
         /// Cria novo estado

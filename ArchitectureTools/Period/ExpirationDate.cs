@@ -50,6 +50,7 @@ namespace ArchitectureTools.Period
         /// <summary>
         /// Valor
         /// </summary>
+        [JsonInclude]
         public DateTime Value { get; private set; }
 
         /// <summary>

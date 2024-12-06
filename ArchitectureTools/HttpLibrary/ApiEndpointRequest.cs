@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ArchitectureTools.HttpLibrary
 {
@@ -27,21 +28,25 @@ namespace ArchitectureTools.HttpLibrary
         /// <summary>
         /// Chave identificadora do endpoint
         /// </summary>
+        [JsonInclude]
         public string EndpointKey { get; private set; }
 
         /// <summary>
         /// Parâmetros de pesquisa
         /// </summary>
+        [JsonInclude]
         public string[]? QueryParameters { get; private set; }
 
         /// <summary>
         /// Conteúdo da requisição
         /// </summary>
+        [JsonInclude]
         public TResult RequestContent { get; private set; }
 
         /// <summary>
         /// Token de autenticação
         /// </summary>
+        [JsonInclude]
         public KeyValuePair<string, string>? AuthenticationToken { get; private set; }
     }
 }

@@ -24,16 +24,19 @@ namespace ArchitectureTools.Enums
         /// <summary>
         /// Chave no formato de inteiro
         /// </summary>
+        [JsonInclude]
         public int IntKey { get; private set; }
 
         /// <summary>
         /// Chave no formato de texto
         /// </summary>
+        [JsonInclude]
         public string StringKey { get; private set; }
 
         /// <summary>
         /// Descrição
         /// </summary>
+        [JsonInclude]
         public string Description { get; private set; }
     }
 }
